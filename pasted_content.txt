@@ -1,0 +1,168 @@
+PRD: MUN TR — Turkish Model UN Conference TrackerSummary
+A static, mobile-first website that displays Model UN conferences happening in Turkey, with filters and search. Audience: Turkish high school students (especially beginners) looking for conferences to attend. Built to be deployed on GitHub Pages with no backend, no build step, no framework.Owner
+0xmortuex (Fadi Raad) — 9th-grade student in Istanbul. Public personal project.Problem
+Existing MUN listing sites (mymun.com, munturkey.com) have three problems:
+
+Global scope — Turkey-specific filtering is buried
+No personalization for high school students vs. university delegates
+No Turkish Lira fee display alongside USD
+Hard to share specific filtered views
+Goal
+A single shareable URL where a Turkish high schooler can:
+
+See all Turkey MUN conferences in one place
+Filter by location, fee, level, language, status, beginner-friendliness, date range
+Search by name/acronym
+Click a card to see full details
+Share filtered views with friends via URL hash
+Non-goals
+
+No user accounts, login, or authentication
+No notifications or email
+No backend, no API, no database — static only
+No conference applications submitted through this site (links go to official conference sites)
+No conference reviews, ratings, or comments
+No middle school (JMUN) or university-only conferences
+No data analytics or tracking
+Design BriefTheme
+Dark academic. Think Oxford / classical institution, not tech startup.
+Background: near-black #0a0a0a
+Surface (cards, filter bar): elevated charcoal #131316 or #111114
+Borders: subtle #27272a
+Primary text: off-white #fafafa
+Secondary text: muted gray #a1a1aa
+Accent color: Oxford Blue #002147 — used for active states, badges, CTAs
+Accent hover/lighter: #0a3a8a (lifted Oxford blue)
+Status colors (dots only, not large blocks):
+
+Open: green #22c55e
+Past/completed: muted gray #71717a
+Postponed: orange #f59e0b
+Dormant: dim red #dc2626
+
+
+Typography
+
+UI: Inter (Google Fonts) — body, headings, labels
+Numbers/dates: JetBrains Mono (Google Fonts) — mono font for visual contrast
+Sizes: 14px body / 12px secondary / 24px card titles / 32px page title
+Layout
+
+Header: Site title "MUN TR" + tagline "Turkish Model UN conferences, tracked"
+Sub-header: last-updated date + disclaimer "Community-sourced data — verify before applying"
+Search bar (sticky on scroll desktop): full-width input, placeholder "Search conferences by name or acronym...", searches both name and acronym fields
+Filter bar (sticky on scroll desktop, collapsible on mobile behind "Filters (N active)" button):
+
+Location: All / Istanbul / Other Turkey
+Status: All / Open / Past / Postponed / Dormant
+Date range: All / Next 30 days / Next 60 days / Next 90 days
+Fee range: All / Free / Under ₺2000 / ₺2000+
+Level: All / High school only / HS + University
+Language: All / English only / English + other languages
+Beginner-friendly: toggle
+Reset filters: button
+
+
+Sort dropdown: Status priority (default) / Date ascending / Fee ascending / Alphabetical
+Card grid: 3 columns desktop / 2 tablet / 1 mobile
+Each card:
+
+Top: large bold acronym + status dot with text
+Conference name (smaller, muted)
+Host school + city
+Dates (mono font) or "TBA" if unknown
+Fee in TRY + USD if known, else "Not disclosed"
+Beginner-friendly pill if applicable (Oxford blue accent)
+Edition label (e.g., "5th edition")
+Hover: lift 2px with subtle shadow
+Click: expand inline to show full details
+
+
+Expanded card details:
+
+Languages
+Rules of procedure
+Committees (if known)
+Character/description
+Official website link
+Instagram link
+Email contact
+"Verify before applying" italic disclaimer
+
+
+Past/completed conferences: auto-collapsed by default behind "Show past conferences (N)" toggle — saves vertical space, focus stays on actionable items
+Empty state when no matches: "No conferences match your filters" + Reset button
+Counter: "Showing X of N conferences"
+Footer: Author credit + last-updated + repo link + data disclaimer
+Behavior
+
+Vanilla JavaScript only — no React, no Vue, no framework
+Single index.html, style.css, app.js, conferences.json
+Filters and search update the visible cards in real-time (no page reload)
+All filter state reflected in URL hash so people can share filtered views (e.g., #search=munb&status=open)
+URL hash updates as filters change; URL is the source of truth on page load
+Accessibility: semantic HTML (article, nav, header), keyboard-navigable filters, WCAG AA color contrast
+Mobile: hamburger or accordion collapse for filter bar at <768px
+No localStorage, no sessionStorage — all state in URL hash and in-memory
+No analytics, tracking, or external scripts beyond Google Fonts CDN
+Data Schema
+Store all conferences in conferences.json:json{
+  "last_updated": "2026-05-20",
+  "conferences": [
+    {
+      "id": "munb-2026",
+      "acronym": "MUNB",
+      "name": "Beşiktaş Anadolu Lisesi Model United Nations",
+      "host": "Beşiktaş Anadolu Lisesi",
+      "city": "Istanbul",
+      "venue": "Beşiktaş, Istanbul",
+      "edition": 5,
+      "edition_label": "5th annual session",
+      "dates": "2026-06-12 to 2026-06-14",
+      "dates_display": "12-14 June 2026",
+      "status": "open",
+      "application_deadline": null,
+      "fee_try": null,
+      "fee_usd": null,
+      "fee_display": "Not publicly disclosed",
+      "fee_range": "unknown",
+      "level": "high_school",
+      "languages": ["English"],
+      "language_display": "English",
+      "rop": null,
+      "beginner_friendly": null,
+      "size": "medium",
+      "committees": null,
+      "website": "https://www.munbesiktas.com/",
+      "instagram": "@munbesiktas",
+      "instagram_url": "https://instagram.com/munbesiktas",
+      "email": "munbpr@gmail.com",
+      "character": "Public high school MUN, English-language, established 2017",
+      "notes": null,
+      "verified_date": "2026-05-20"
+    }
+  ]
+}Status enum: open, past, postponed, dormant, unknown
+Level enum: high_school, high_school_university
+Fee range enum: free, under_2000, over_2000, unknownDeployment
+
+Static site, no build step
+Single HTML/CSS/JS/JSON files at repo root
+Deployable on GitHub Pages from main branch root
+Target URL: https://0xmortuex.github.io/mun-tracker/
+README.md with project description, schema docs, and deploy instructions
+Conference Data (43 entries)#AcronymFull NameHostCityDatesStatusFeeLevelEditionLanguagesBeginner-friendlyWebsiteInstagram1MUNDPModel UN Development ProgrammeKoç SchoolIstanbul (Tuzla)22-24 May 2026pastNot disclosedHS26thEnglish+FrenchNomodelundp.orgunknown2ITUMUNIstanbul Technical University MUNIstanbul Technical UniversityIstanbul (Sarıyer)26-29 Jan 2026past₺2,300 / €150 / €350 w/accomHS+Uni9thEnglish+FrenchYesmun.itu.edu.tr@itu_mun3TIMUNTurkish International MUNÜsküdar American AcademyIstanbul (Üsküdar)27-30 Nov 2025pastNot disclosedHS31stEnglish+FrenchNotimun.gen.tr@uaamun4RCIMUNRobert College International MUNRobert CollegeIstanbul (Arnavutköy)15-17 Mar 2026pastPassword-protectedHSunknownEnglishNorcimun.org@rcimun5TEDIMUNTED Istanbul College MUNTED Istanbul CollegeIstanbul6-8 Feb 2026pastFREEHS6thEnglishNotedimun.org@tedimunclub6CALMUNCağaloğlu Anadolu Lisesi MUNCağaloğlu ALIstanbul (Fatih)8-10 May 2026pastEstimated ₺2200-2600HS10thEnglish+FrenchYescalmun.org.tr@calmodelun7HASMUNKadir Has University MUNKadir Has UniversityIstanbul (Cibali)1-3 May 2026past (possibly dormant)Not disclosedHS+Uni11thEnglishNohasmun.orgunknown8MarmaraMUNMarmaraMUN'26 ZENITHMarmara UniversityIstanbul24-26 Apr 2026pastNot disclosedHS+Uni10thEnglish+FrenchNomarmaramun.org@marmaramun9MEFMUNMEF High School MUNMEF International SchoolIstanbul (Sarıyer)2026 unconfirmedunknownNot disclosedHS6thEnglishNomefhighmun.comunknown10MFLMUNMaltepe Fen Lisesi MUNMaltepe Fen LisesiIstanbul (Maltepe)25-26 Apr 2026pastNot disclosedHS1stEnglishNomaltepefenmun.org@mfl_munclub11BoğaziçiMUNBoğaziçi University MUNBoğaziçi UniversityIstanbul (Bebek)5-8 Feb 2026pastNot disclosedHS+Uni (verify HS)8thEnglishNobogazicimun.com@bogazicimun12FWWMUNFWWMUN IstanbulFuture We Want MUN NYCIstanbul (DoubleTree Topkapı)16-19 Jul 2026open$50 USD Turkey-resident / $100-200 intlHS+UniunknownEnglishYesfwwmun-nyc.org/mun-istanbul@fwwmun13IIMUNIstanbul International MUNNeoterican LLC (US for-profit)Istanbul (Euro Park Otel, Esenyurt)25-28 Jun 2026open$389+ USD basic packageunknownunknownEnglishNo (CAUTION FLAG)istanbulmun.comunknown14MUNBBeşiktaş Anadolu Lisesi MUNBeşiktaş ALIstanbul (Beşiktaş)12-14 Jun 2026openNot disclosedHS5thEnglishNo (verify)munbesiktas.com@munbesiktas15KALMUN-KKadıköy Anadolu Lisesi MUNKadıköy ALIstanbul (Kadıköy)TBAopen₺1,250 indiv / ₺1,200 delegation early birdHSunknownEnglishNo (verify)kalmun.org@kalmun16IELMUNIstanbul Erkek Lisesi MUNIstanbul Erkek LisesiIstanbul (Fatih)16-18 Jun 2026openNot disclosedHS15thEnglish+German+TurkishNoiel-mun.com@ielmun17KMUNKabataş Erkek Lisesi MUNKabataş ELIstanbul (Ortaköy/Beşiktaş)TBApostponedunknownHS12thEnglishNokabatasmodelun.com@kabatasmodelun18GSLMUNGalatasaray Lisesi MUNGalatasaray LisesiIstanbul (Beyoğlu)None since 2023dormantunknownHS7th (last)EnglishNogslmun.org@gsl.mun19BAUMUNBahçeşehir University MUNBahçeşehir UniversityIstanbul2026 various editionsunknownNot disclosedHS+UniunknownEnglishNobaumun.orgunknown20BilgiMUNIstanbul Bilgi University MUNIstanbul Bilgi UniversityIstanbulunconfirmedunknownNot disclosedHS+UniunknownEnglishNobilgimun.org@bilgimun21YTUMUNYıldız Teknik University MUNYıldız Teknik UniversityIstanbul26-28 Dec 2025past (Jul 2026 expected)Not disclosedHS+UniunknownEnglishNoytumun.org@ytumunofficial22IGUMUNIstanbul Gelişim University MUNIstanbul Gelişim UniversityIstanbul2-3 May 2026pastNot disclosedHS+Uni2ndEnglishNoigumun.comunknown23TEDMUNTED Ankara MUNTED Ankara CollegeAnkara17-19 Apr 2026pastNot disclosedHSunknownEnglishNounknownunknown24TBMUNTED Bodrum MUNTED Bodrum CollegeBodrum17-19 Apr 2026pastNot disclosedHS+JMUNunknownEnglishNounknownunknown25EGIMUNEskişehir Gelişim Fen Lisesi MUNMAT-FKB Gelişim FLEskişehir3-5 Apr 2026pastNot disclosedHSunknownEnglishNounknownunknown26ECMUNÇağdaş College MUNÇağdaş CollegeEskişehir8-10 May 2026pastNot disclosedHS+JMUNunknownEnglishNounknownunknown27ATAYURTAtayurt Schools MUNAtayurt SchoolsEskişehir15-17 May 2026pastNot disclosedHS+JMUNunknownEnglishNounknownunknown28GKVMUNGaziantep College Foundation MUNGaziantep College FoundationGaziantep10-12 Apr 2026pastNot disclosedHSunknownEnglishNounknownunknown29SANMUNSANKO College MUNSANKO CollegeGaziantep24-26 Apr 2026pastNot disclosedHSunknownEnglishNounknownunknown30MUNACSTAD Schools MUNTAD SchoolsKuşadası24-26 Apr 2026pastNot disclosedPrimary+Middle+HSunknownEnglishNounknownunknown31TEDCMUNTED Çorlu MUNTED Çorlu CollegeÇorlu (Tekirdağ)18-19 Apr 2026pastNot disclosedHS (MEB-approved)unknownEnglishNounknownunknown32CFLMUNÇorlu Fen Lisesi MUNÇorlu Fen LisesiÇorlu (Tekirdağ)1-3 May 2026pastNot disclosedHS1stEnglishNounknownunknown33SSALMUNSırasöğütler Anadolu Lisesi MUNSırasöğütler ALKocaeli (Darıca)27-29 Mar 2026pastNot disclosedHS2ndEnglishNounknownunknown34TEDYMUNTED Yalova MUNTED Yalova KolejiYalova2-3 May 2026pastNot disclosedHS+JMUNunknownEnglishNounknownunknown35LİDERMUNİstanbul Lider Okulları Adana MUNİstanbul Lider Okulları AdanaAdana9-10 May 2026pastNot disclosedHSunknownEnglishNounknownunknown36EFAMUNElazığ Final Akademi MUNElazığ Final AkademiElazığ16-17 May 2026pastNot disclosedHS+JMUNunknownEnglishNounknownunknown37EBALMUNErdem Bayazıt AL MUNErdem Bayazıt Anadolu LisesiKahramanmaraş16-17 May 2026pastNot disclosedHSunknownEnglishNounknownunknown38MUNAASEge Atabey HS MUNEge Atabey HSAydın27-29 Mar 2026pastNot disclosedHSunknownEnglishNounknownunknown39APFLMUNAnkara Pursaklar Fen Lisesi MUNAnkara Pursaklar Fen LisesiAnkara24-26 Apr 2026pastNot disclosedHS1stEnglishNounknownunknown40BIGMUNBüyük College MUNBüyük CollegeAnkara8-10 May 2026pastNot disclosedHSunknownEnglishNounknownunknown41KALMUN-KocaeliKocaeli Anadolu Lisesi MUNKocaeli ALKocaeli (İzmit)15-17 May 2026pastNot disclosedHSunknownEnglishYeskalmun.comunknown42MUNEAAnkara Erman Ilıcak Fen Lisesi MUNAnkara Erman Ilıcak FLAnkara (Sincan)22-24 May 2026past (apps closed)Not disclosedHS2ndEnglishNomunea26.com@munea_aeifl43Nazilli AL MUNNazilli Anadolu Lisesi MUNNazilli Anadolu LisesiAydın (Nazilli)12 May 2026pastNot disclosedHSearlyEnglishNounknownunknownAcceptance Criteria
+
+ All 43 conferences render as cards on initial page load
+ Search bar filters cards by acronym or full name match (case-insensitive)
+ All 7 filters apply correctly and combine via AND logic
+ URL hash updates as filters change and is read on page load
+ Past/completed conferences are auto-collapsed by default behind a toggle
+ Sort dropdown reorders cards (status priority default, date asc, fee asc, alphabetical)
+ Card click expands inline to show full details
+ Mobile layout: filter bar collapses, single-column grid
+ Empty state shown when no cards match, with Reset button
+ Footer shows author credit, last-updated date, repo link
+ Site is deployable to GitHub Pages with git push — no build step
+ No localStorage, no external scripts beyond Google Fonts CDN
+ WCAG AA color contrast on all text

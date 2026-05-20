@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MUN TR — Turkish Model UN Conferences</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-content">
+                <h1 class="site-title">MUN TR</h1>
+                <p class="site-tagline">Turkish Model UN conferences, tracked</p>
+            </div>
+            <div class="header-meta">
+                <p class="last-updated">Last updated: <span id="lastUpdated">-</span></p>
+                <p class="disclaimer">Community-sourced data — verify before applying</p>
+            </div>
+        </header>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <input 
+                type="text" 
+                id="searchInput" 
+                class="search-bar" 
+                placeholder="Search conferences by name or acronym..."
+                aria-label="Search conferences"
+            >
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-container">
+            <button class="filter-toggle" id="filterToggle" aria-label="Toggle filters">
+                <span class="filter-toggle-text">Filters (<span id="activeFilterCount">0</span>)</span>
+            </button>
+            
+            <div class="filter-bar" id="filterBar">
+                <!-- Location Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Location</label>
+                    <div class="filter-options">
+                        <button class="filter-btn active" data-filter="location" data-value="all">All</button>
+                        <button class="filter-btn" data-filter="location" data-value="istanbul">Istanbul</button>
+                        <button class="filter-btn" data-filter="location" data-value="other">Other Turkey</button>
+                    </div>
+                </div>
+
+                <!-- Status Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Status</label>
+                    <div class="filter-options">
+                        <button class="filter-btn active" data-filter="status" data-value="all">All</button>
+                        <button class="filter-btn" data-filter="status" data-value="open">Open</button>
+                        <button class="filter-btn" data-filter="status" data-value="past">Past</button>
+                        <button class="filter-btn" data-filter="status" data-value="postponed">Postponed</button>
+                        <button class="filter-btn" data-filter="status" data-value="dormant">Dormant</button>
+                    </div>
+                </div>
+
+                <!-- Date Range Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Date Range</label>
+                    <div class="filter-options">
+                        <button class="filter-btn active" data-filter="daterange" data-value="all">All</button>
+                        <button class="filter-btn" data-filter="daterange" data-value="30">Next 30 days</button>
+                        <button class="filter-btn" data-filter="daterange" data-value="60">Next 60 days</button>
+                        <button class="filter-btn" data-filter="daterange" data-value="90">Next 90 days</button>
+                    </div>
+                </div>
+
+                <!-- Fee Range Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Fee Range</label>
+                    <div class="filter-options">
+                        <button class="filter-btn active" data-filter="feerange" data-value="all">All</button>
+                        <button class="filter-btn" data-filter="feerange" data-value="free">Free</button>
+                        <button class="filter-btn" data-filter="feerange" data-value="under_2000">Under ₺2000</button>
+                        <button class="filter-btn" data-filter="feerange" data-value="over_2000">₺2000+</button>
+                    </div>
+                </div>
+
+                <!-- Level Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Level</label>
+                    <div class="filter-options">
+                        <button class="filter-btn active" data-filter="level" data-value="all">All</button>
+                        <button class="filter-btn" data-filter="level" data-value="high_school">High school only</button>
+                        <button class="filter-btn" data-filter="level" data-value="high_school_university">HS + University</button>
+                    </div>
+                </div>
+
+                <!-- Language Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Language</label>
+                    <div class="filter-options">
+                        <button class="filter-btn active" data-filter="language" data-value="all">All</button>
+                        <button class="filter-btn" data-filter="language" data-value="english_only">English only</button>
+                        <button class="filter-btn" data-filter="language" data-value="english_other">English + other</button>
+                    </div>
+                </div>
+
+                <!-- Beginner-friendly Filter -->
+                <div class="filter-group">
+                    <label class="filter-label">Beginner-friendly</label>
+                    <div class="filter-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="beginnerFriendlyCheck" class="checkbox-input" data-filter="beginner">
+                            <span class="checkbox-text">Yes</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Reset Button -->
+                <button class="reset-btn" id="resetBtn">Reset filters</button>
+            </div>
+        </div>
+
+        <!-- Sort and Controls -->
+        <div class="controls-bar">
+            <div class="sort-container">
+                <label for="sortSelect" class="sort-label">Sort by:</label>
+                <select id="sortSelect" class="sort-dropdown" aria-label="Sort conferences">
+                    <option value="status">Status priority (default)</option>
+                    <option value="date">Date ascending</option>
+                    <option value="fee">Fee ascending</option>
+                    <option value="alphabetical">Alphabetical</option>
+                </select>
+            </div>
+
+            <div class="past-toggle">
+                <label class="checkbox-label">
+                    <input type="checkbox" id="showPastCheck" class="checkbox-input">
+                    <span class="checkbox-text">Show past conferences (<span id="pastCount">0</span>)</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Counter -->
+        <div class="counter">
+            Showing <span id="visibleCount">0</span> of <span id="totalCount">0</span> conferences
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <p>No conferences match your filters</p>
+            <button class="reset-btn" id="resetBtnEmpty">Reset filters</button>
+        </div>
+
+        <!-- Conference Grid -->
+        <div id="conferenceGrid" class="conference-grid">
+            <!-- Cards will be inserted here -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>Created by <strong>0xmortuex</strong> (Fadi Raad) — 9th-grade student in Istanbul</p>
+        <p>Last updated: <span id="footerUpdated">-</span> | <a href="https://github.com/0xmortuex/mun-tracker" target="_blank" rel="noopener noreferrer">View on GitHub</a></p>
+        <p class="footer-disclaimer">Community-sourced data — always verify information before applying to conferences</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>

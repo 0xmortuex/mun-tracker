@@ -1,0 +1,77 @@
+Redesign the visual style of the MUN TR conference tracker you built earlier. Keep ALL the HTML structure, all JavaScript logic, and all 43 conferences unchanged. Only redesign style.css.
+
+The user feedback: the current academic Oxford blue theme looks boring. They want vibrance, glassmorphism, modern social-media-shareable design.
+
+NEW DESIGN BRIEF — glassmorphism with vibrance:
+
+BACKGROUND:
+- Deep gradient base — diagonal or radial gradient from dark navy (#0a0e27) at top-left to deep purple-black (#1a0a2e) at bottom-right
+- Add 2-3 large soft-blurred color "glow blobs" positioned absolutely behind everything (fixed position, low opacity ~0.15, blurred to 200px). Colors: electric blue (#3b82f6), violet (#8b5cf6), magenta (#ec4899). These give the background life without being loud.
+
+CARDS — the centerpiece:
+- background: rgba(255, 255, 255, 0.05)
+- backdrop-filter: blur(20px) saturate(180%)
+- border: 1px solid rgba(255, 255, 255, 0.1)
+- border-radius: 16px (more rounded than before)
+- box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3)
+- Hover state: lift translateY(-4px), border becomes accent color, shadow intensifies, optional subtle inner glow
+- Acronym text: LARGER (32-40px), bolder, with subtle gradient text fill (linear-gradient from accent blue to violet, applied via background-clip: text)
+- Conference name below: muted, smaller, regular weight
+
+STATUS BADGES (more prominent than before):
+- Open: solid green background rgba(34, 197, 94, 0.15) with border rgba(34, 197, 94, 0.4), text #4ade80, glowing dot
+- Past: muted gray (less attention)
+- Postponed: orange glow
+- Dormant: red glow
+- Beginner-friendly pill: gradient background (electric blue → violet), white text, slight glow
+
+FILTER BAR:
+- Same glass treatment as cards (blur + semi-transparent)
+- Sticky, glass effect makes it elegant when content scrolls behind
+- Filter buttons: pill-shaped, glass background when inactive, solid accent gradient when active
+- Active filter button gets a subtle inner glow
+
+SEARCH BAR:
+- Larger, more prominent
+- Same glass treatment
+- Focus state: border glows accent color, subtle box-shadow accent halo
+
+TYPOGRAPHY:
+- Keep Inter and JetBrains Mono
+- Acronyms: 32-40px, font-weight 800, with gradient text effect
+- Site title "MUN TR": 48-56px, bold, gradient text
+- Body: unchanged 14-15px
+- Add letter-spacing on uppercase labels for elegance
+
+ANIMATIONS:
+- Card hover: smooth 200ms ease transitions on transform, border, shadow
+- Filter changes: cards fade in
+- Subtle gradient animation on the background blobs (slow, 20-30s, very subtle position shift)
+- Button hover states: smooth color/glow transitions
+
+ACCENT COLORS:
+- Primary: electric blue #3b82f6
+- Secondary: violet #8b5cf6
+- Tertiary highlight: magenta #ec4899
+
+RESPONSIVE:
+- Mobile: cards still glassmorphic but slightly less blur for performance
+- Reduce gradient animation on mobile
+- Single column at <768px
+- Respect prefers-reduced-motion
+
+ACCESSIBILITY:
+- Maintain WCAG AA contrast
+- prefers-reduced-motion: disable background blob animation
+- Focus states on all interactive elements
+
+DO NOT:
+- Change index.html structure
+- Change app.js logic
+- Change conferences.json data
+- Add new files
+- Add a CSS framework (no Tailwind, no Bootstrap)
+
+Only rewrite style.css. Other files stay byte-for-byte identical.
+
+Deliver as a zip with all four files (index.html, style.css, app.js, conferences.json) so I can drop it in and replace.
